@@ -10,15 +10,14 @@ Through this project, I was able to:
 
 ## Basic Instructions
 
-Clone the project:
-`git clone [your_repo_link_here]`
+Clone the project.
 
 Open the project in your preferred IDE.
 
 Run the application with Flask:
 `flask run`
 
-Navigate to the URL provided by Flask (e.g., `http://127.0.0.1:5000/`).
+Navigate to the URL provided by Flask.
 
 ## Usage Instructions
 
