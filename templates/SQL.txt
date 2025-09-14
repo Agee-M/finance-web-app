@@ -1,0 +1,130 @@
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    username TEXT NOT NULL,
+    hash TEXT NOT NULL,
+    cash NUMERIC NOT NULL DEFAULT 10000.00
+);
+
+CREATE TABLE holdings (
+    user_id INTEGER NOT NULL,
+    stock TEXT NOT NULL,
+    share INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+CREATE TABLE purchases (
+    purchase_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+    user_id INTEGER NOT NULL,
+    date TIMEDATE NOT NULL,
+    stock TEXT NOT NULL,
+    share INTEGER NOT NULL,
+    bought INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE sales (
+    sale_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+    user_id INTEGER NOT NULL,
+    date TIMEDATE NOT NULL,
+    stock TEXT NOT NULL,
+    share INTEGER NOT NULL,
+    sold INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+
+
+SELECT purchase_id, NULL AS sale_id, stock, date, SUM(share)
+FROM purchases
+GROUP BY purchase_id
+UNION ALL
+SELECT NULL, sale_id, stock, date, SUM(share)
+FROM sales
+GROUP BY sale_id
+ORDER BY date DESC;
+
+
+
+
+
+
+
+
+SELECT purchase_id, NULL AS sale_id, stock, date, SUM(share)
+FROM purchases
+GROUP BY purchase_id
+UNION ALL
+SELECT NULL, sale_id, stock, date, SUM(share)
+FROM sales
+GROUP BY sale_id
+ORDER BY date DESC;
+
+
+
+SELECT username, cash, stock, share
+FROM users
+JOIN purchases
+ON users.id = purchases.user_id
+WHERE users.id = 1;
+
+
+INSERT INTO purchases (user_id, stock, share)
+VALUES (?, ?, ?)
+
+
+db.execute('INSERT INTO purchases (user_id, date, stock, share) VALUES (?, ?, ?, ?)', session['user_id'], datetime.now(), stock['symbol'], shares)
+db.execute('UPDATE users SET cash = ?', balance)
+
+UPDATE users
+SET cash = ?
+WHERE id = ?
+
+
+
+
+
+SELECT stock, share, cash
+FROM purchases
+JOIN users ON user_id = id
+GROUP BY stock;
+
+
+
+SELECT holdings.stock AS stock, SUM(holdings.share) AS share, purchases.bought AS bought
+FROM holdings
+JOIN purchases ON holdings.stock = purchases.stock
+WHERE holdings.user_id = 6
+GROUP BY holdings.stock;
+
+
+SELECT holdings.stock AS stock,
+    holdings.share AS share,
+    purchases.bought AS bought
+FROM holdings
+JOIN purchases
+    ON holdings.stock = purchases.stock
+WHERE holdings.user_id = 6
+GROUP BY holdings.stock;
+
+
+SELECT purchase_id,
+    NULL AS sale_id,
+    stock, date,
+    SUM(share) AS share,
+    bought AS price
+FROM purchases
+WHERE user_id = 6
+GROUP BY purchase_id
+UNION ALL
+SELECT NULL,
+    sale_id,
+    stock,
+    date,
+    SUM(share) AS share,
+    sold
+FROM sales
+WHERE user_id = 6
+GROUP BY sale_id
+ORDER BY date DESC;

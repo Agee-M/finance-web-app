@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <h3>History</h3>
+
+    <br>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Shares</th>
+                <th scope="col">Price</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for histories in history %}
+                <!-- Print purchase row -->
+                {% if histories.sale_id == None %}
+                    <tr>
+                        <th scope="row">BUY</th>
+                        <td>{{histories.stock}}</td>
+                        <td>{{histories.share}}</td>
+                        <td>{{histories.price | usd}}</td>
+                        <td>{{histories.date}}</td>
+                    </tr>
+                <!-- Print sale row -->
+                {% else %}
+                    <tr>
+                        <th scope="row">SELL</th>
+                        <td>{{histories.stock}}</td>
+                        <td>{{histories.share}}</td>
+                        <td>{{histories.price}}</td>
+                        <td>{{histories.date}}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
