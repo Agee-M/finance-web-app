@@ -1,6 +1,3 @@
-# Original Commits:
-- Found on personal https://cs50.dev/
-
 # CS50 Finance
 
 This project was an opportunity for me to apply object-oriented programming principles and leverage existing frameworks to build a functional web application.
